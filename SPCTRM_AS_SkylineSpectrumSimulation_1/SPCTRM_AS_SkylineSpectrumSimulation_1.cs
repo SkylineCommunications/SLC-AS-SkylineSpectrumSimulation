@@ -64,7 +64,7 @@ namespace InitializeDefaultCarriers_1
 	/// </summary>
 	public class Script
 	{
-		private readonly int freqShiftOffset = 150;
+		private readonly int freqShiftOffsetMHz = 150;
 		private readonly string commonSatIndex1 = "Common Satellite spectrum";
 		private readonly string commonSatIndex2 = "Common Satellite spectrum_1";
 
@@ -126,10 +126,10 @@ namespace InitializeDefaultCarriers_1
 					GoodbyeSunshine(engine, spectrumElement);
 					break;
 				case "FrequencyShiftUp":
-					ShiftFrequency(engine, spectrumElement, indexReference, freqShiftOffset);
+					ShiftFrequency(engine, spectrumElement, indexReference, freqShiftOffsetMHz);
 					break;
 				case "FrequencyShiftDown":
-					ShiftFrequency(engine, spectrumElement, indexReference, -freqShiftOffset);
+					ShiftFrequency(engine, spectrumElement, indexReference, -freqShiftOffsetMHz);
 					break;
 				default:
 					engine.GenerateInformation($"Unknown mode: {mode}");
