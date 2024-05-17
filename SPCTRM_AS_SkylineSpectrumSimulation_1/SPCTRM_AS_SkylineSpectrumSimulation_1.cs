@@ -67,6 +67,7 @@ namespace InitializeDefaultCarriers_1
 		private readonly int freqShiftOffsetMHz = 150;
 		private readonly string commonSatIndex1 = "Common Satellite spectrum";
 		private readonly string commonSatIndex2 = "Common Satellite spectrum_1";
+		private readonly string spectrumSimulationElement = "SPCTRM Spectrum Simulation";
 
 		/// <summary>
 		/// The script entry point.
@@ -110,7 +111,7 @@ namespace InitializeDefaultCarriers_1
 			// this flag is needed in order to double check if new rows were created during the retry loop.
 			engine.SetFlag(RunTimeFlags.NoKeyCaching);
 
-			ScriptDummy spectrumElement = engine.GetDummy("Linked Spectrum Element");
+			Element spectrumElement = engine.FindElement(spectrumSimulationElement);
 			string mode = engine.GetScriptParam("Mode").Value;
 			string indexReference = engine.GetScriptParam("IndexReference").Value;
 
@@ -137,7 +138,7 @@ namespace InitializeDefaultCarriers_1
 			}
 		}
 
-		private void ShiftFrequency(IEngine engine, ScriptDummy spectrumElement, string indexReference, int freqShiftOffset)
+		private void ShiftFrequency(IEngine engine, Element spectrumElement, string indexReference, int freqShiftOffset)
 		{
 			if (!CheckIfKeysAreCreated(engine, spectrumElement))
 			{
@@ -148,7 +149,7 @@ namespace InitializeDefaultCarriers_1
 			spectrumElement.SetParameterByPrimaryKey(352 /*CF*/, indexReference, currentCF + freqShiftOffset);
 		}
 
-		private void GoodbyeSunshine(IEngine engine, ScriptDummy spectrumElement)
+		private void GoodbyeSunshine(IEngine engine, Element spectrumElement)
 		{
 			if (!CheckIfKeysAreCreated(engine, spectrumElement))
 			{
@@ -159,7 +160,7 @@ namespace InitializeDefaultCarriers_1
 			spectrumElement.SetParameterByPrimaryKey(354 /*AMPL*/, commonSatIndex2, 10);
 		}
 
-		private void HelloSunshine(IEngine engine, ScriptDummy spectrumElement)
+		private void HelloSunshine(IEngine engine, Element spectrumElement)
 		{
 			if (!CheckIfKeysAreCreated(engine, spectrumElement))
 			{
@@ -170,7 +171,7 @@ namespace InitializeDefaultCarriers_1
 			spectrumElement.SetParameterByPrimaryKey(354 /*AMPL*/, commonSatIndex2, 20);
 		}
 
-		private void InitializeDefaults(IEngine engine, ScriptDummy spectrumElement)
+		private void InitializeDefaults(IEngine engine, Element spectrumElement)
 		{
 			if (!CheckIfKeysAreCreated(engine, spectrumElement))
 			{
@@ -187,6 +188,7 @@ namespace InitializeDefaultCarriers_1
 			}
 
 			// Configure the two indexes
+
 			spectrumElement.SetParameterByPrimaryKey(352 /*CF*/, commonSatIndex1, 11750);
 			spectrumElement.SetParameterByPrimaryKey(353 /*SPAN*/, commonSatIndex1, 36);
 			spectrumElement.SetParameterByPrimaryKey(354 /*AMPL*/, commonSatIndex1, 30);
@@ -194,9 +196,11 @@ namespace InitializeDefaultCarriers_1
 			spectrumElement.SetParameterByPrimaryKey(352 /*CF*/, commonSatIndex2, 11790);
 			spectrumElement.SetParameterByPrimaryKey(353 /*SPAN*/, commonSatIndex2, 9);
 			spectrumElement.SetParameterByPrimaryKey(354 /*AMPL*/, commonSatIndex2, 20);
+
+			spectrumElement.SetParameter(11 /*SimulationMode*/, 2 /*Carriers From Table*/);
 		}
 
-		private bool CheckIfKeysAreCreated(IEngine engine, ScriptDummy spectrumElement)
+		private bool CheckIfKeysAreCreated(IEngine engine, Element spectrumElement)
 		{
 			var keys = spectrumElement.GetTablePrimaryKeys(300 /*CarrierTable*/);
 			if (keys != null)

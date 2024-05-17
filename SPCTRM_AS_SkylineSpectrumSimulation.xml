@@ -7,12 +7,6 @@
 	<CheckSets>FALSE</CheckSets>
 	<Folder>/DataMiner Catalog/DevOps/Skyline Spectrum Simulation</Folder>
 	<Protocols>
-		<Protocol id="4">
-			<Description>Linked Spectrum Element</Description>
-			<Name>Skyline Spectrum Simulation</Name>
-			<Version>Production</Version>
-			<DefaultElement></DefaultElement>
-		</Protocol>
 	</Protocols>
 	<Memory>
 	</Memory>
